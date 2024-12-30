@@ -1,4 +1,6 @@
 from typing import Dict
+from src.models.repository.person_repository import person_repository
+from src.models.entities.person import Person
 
 # Classe do controlador de registros
 class PersonRegisterController:
@@ -9,9 +11,8 @@ class PersonRegisterController:
         try:
             # Realiza uma validação de dados da view.
             self.__validate_fields(new_person_informations)
-            
-            # TODO: Enviar para models para cadastro de dados 
-            
+            self.__create_person_entity_and_store(new_person_informations)
+                       
             # Monta um response com as informações formatadas 
             response = self.__format_response(new_person_informations)
 
@@ -36,6 +37,14 @@ class PersonRegisterController:
         # Se altura é um campo inteiro
         try: int(new_person_informations["altura"])
         except: raise Exception("Campo Altura incorreta!")
+
+    def __create_person_entity_and_store(self, new_person_informations: Dict) -> None:
+        name = new_person_informations["name"]
+        idade = new_person_informations["idade"]
+        altura = new_person_informations["altura"]
+
+        new_person = Person (name, idade, altura)
+        person_repository.registry_person(new_person)
 
     # Método que formata os dados em um dicionário mais completo
     def __format_response(self, new_person_informations: Dict) -> Dict:

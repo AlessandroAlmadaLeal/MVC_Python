@@ -32,6 +32,7 @@ class PersonRegisterView:
             Informações:
                 Nome: { message["attributes"]["name"] }
                 Idade: { message["attributes"]["idade"] }
+                Altura: { message["attributes"]["altura"] }
         '''
         print(success_message)
 
